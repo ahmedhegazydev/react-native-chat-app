@@ -27,26 +27,40 @@ const chatApi = axios.create({
 
 axiosRetry(chatApi, {retries: 3, retryDelay: axiosRetry.exponentialDelay});
 
-const logRequest = config => config;
-
-const logError = error => Promise.reject(error);
-
 chatApi.interceptors.request.use(
   async config => {
     const token = AUTH_TOKENS[currentUser];
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    return logRequest(config);
+    return config;
   },
-  error => Promise.reject(error),
+  error => {
+    return Promise.reject(error);
+  },
 );
 
 function handleNetworkError(error) {
   if (error.isAxiosError && !error.response) {
     startNetworkErrorTimer();
-  } else if (error.response && error.response.status !== 200) {
-    console.log('API responded with error status:', error.response.status);
+  } else if (error.response) {
+    const status = error.response.status;
+    const errorMessages = {
+      400: 'Bad Request',
+      401: 'Unauthorized',
+      403: 'Forbidden',
+      404: 'Not Found',
+      500: 'Internal Server Error',
+      502: 'Bad Gateway',
+    };
+
+    console.error(
+      `${errorMessages[status] || 'Unknown error'}:`,
+      error.response.data,
+    );
+
+    if (status === 401) navigate('LoginScreen');
+    if (status === 403) navigate('ForbiddenScreen');
   }
 }
 
@@ -61,8 +75,16 @@ function startNetworkErrorTimer() {
         });
       },
       3 * 60 * 1000,
-    ); // 3 minutes
+    );
   }
 }
 
-export {chatApi as wosolApi, setActiveUser, logRequest, logError};
+chatApi.interceptors.response.use(
+  response => response,
+  error => {
+    handleNetworkError(error);
+    return Promise.reject(error);
+  },
+);
+
+export {chatApi as wosolApi, setActiveUser};

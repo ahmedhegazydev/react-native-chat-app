@@ -1,43 +1,29 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect, useRef } from 'react';
-import { I18nManager, View, Text, Modal, Image, Platform } from 'react-native';
-import { NavigationContainer, CommonActions } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Toast, { BaseToast } from 'react-native-toast-message';
+import React, {useState, useEffect, useRef} from 'react';
+import {I18nManager, View, Text, Modal, Image, Platform} from 'react-native';
+import {NavigationContainer, CommonActions} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Toast, {BaseToast} from 'react-native-toast-message';
 import RNRestart from 'react-native-restart';
-import RNLocalize from 'react-native-localize';
 import NetInfo from '@react-native-community/netinfo';
 import SplashScreen from './src/Screens/SplashScreen';
-import TabNavigator, { TabProvider } from './src/Navigation/TabNavigator';
+import TabNavigator, {TabProvider} from './src/Navigation/TabNavigator';
 import LoginScreen from './src/Screens/LoginScreen';
 import ErrorScreen from './src/Screens/ErrorScreen';
-import { navigationRef } from './src/Utils/Common';
+import {navigationRef} from './src/Utils/Common';
 import i18n from './src/Localization/i18n';
 import CheckInternetConnection from './src/assets/images/check_internet_connection.png';
 import CustomButton from './src/Utils/Views/CustomButton';
-import { light } from './src/styles/colors';
-import { fonts } from './src/styles/fonts';
-import { ms, ScaledSheet } from 'react-native-size-matters';
-import { I18nextProvider } from 'react-i18next';
-import { apiStorage } from './src/Utils/AsyncStorageManager';
+import {light} from './src/styles/colors';
+import {fonts} from './src/styles/fonts';
+import {ms, ScaledSheet} from 'react-native-size-matters';
+import {I18nextProvider} from 'react-i18next';
+import {apiStorage} from './src/Utils/AsyncStorageManager';
 
 const Stack = createStackNavigator();
 
-const NETWORK_ERROR_MESSAGE = "يبدو أنك غير متصل بالإنترنت، يرجى الاتصال بالإنترنت والمحاولة مرة أخرى";
-
-async function logout(navigation: any) {
-  await apiStorage.removeItem('auth');
-  await apiStorage.removeItem('appLaunched');
-  await apiStorage.removeItem('tokenExpire');
-  await apiStorage.removeItem('SAPtoken');
-
-  navigation.dispatch(
-    CommonActions.reset({
-      index: 0,
-      routes: [{ name: 'Login' }],
-    }),
-  );
-}
+const NETWORK_ERROR_MESSAGE =
+  'يبدو أنك غير متصل بالإنترنت، يرجى الاتصال بالإنترنت والمحاولة مرة أخرى';
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(true);
@@ -62,7 +48,7 @@ export default function App() {
       setIsConnected(state.isConnected);
       setHideModal(state.isConnected);
     });
-    return () => unsubscribe();  // Cleanup the listener when the component unmounts
+    return () => unsubscribe();
   }, []);
 
   const toggleWifiPopup = () => {
@@ -119,22 +105,22 @@ export default function App() {
               <Stack.Screen
                 name="splash"
                 component={SplashScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="Login"
                 component={LoginScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="Tab"
                 component={TabNavigator}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="ErrorScreen"
                 component={ErrorScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
             </Stack.Navigator>
             <Toast config={toastConfig} />
@@ -223,4 +209,3 @@ const styles = ScaledSheet.create({
     color: light.sucessToastMsg,
   },
 });
-

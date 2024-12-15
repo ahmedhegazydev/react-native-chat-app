@@ -2,7 +2,6 @@ import {create} from 'zustand';
 import {networkManager} from '../Utils/NetworkManager';
 import {apiStorage} from '../Utils/AsyncStorageManager';
 
-// Define the types for the store state and actions
 interface Room {
   id: string;
   name: string;

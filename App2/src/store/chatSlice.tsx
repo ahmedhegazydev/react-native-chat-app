@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {createDirectus, rest, realtime, staticToken} from '@directus/sdk';
+import {createDirectus, graphql, realtime, staticToken} from '@directus/sdk';
 import {networkManager} from '../Utils/NetworkManager';
 
 interface Message {
@@ -52,7 +52,7 @@ let directusClient: any = null;
 function getDirectusClient() {
   if (!directusClient) {
     directusClient = createDirectus(WEBSOCKET_URL)
-      .with(rest())
+      .with(graphql())
       .with(realtime())
       .with(staticToken(AUTH_TOKENS[currentUser]));
   }
@@ -70,16 +70,25 @@ const useChatStore = create<ChatStore>((set, get) => ({
     const client = getDirectusClient();
     try {
       set({loading: true});
-      const response = await client.items('room').readMany({
-        fields: [
-          'id',
-          'name',
-          'last_message.content',
-          'members.id',
-          'date_created',
-        ],
-      });
-      set({rooms: response.data, loading: false});
+
+      const query = `
+        query {
+          rooms {
+            id
+            name
+            last_message {
+              content
+            }
+            members {
+              id
+            }
+            date_created
+          }
+        }
+      `;
+
+      const response = await client.query(query);
+      set({rooms: response.data.rooms, loading: false});
     } catch (error: any) {
       set({error: error.message, loading: false});
     }
@@ -89,12 +98,28 @@ const useChatStore = create<ChatStore>((set, get) => ({
     const client = getDirectusClient();
     try {
       set({loading: true});
-      const response = await client.items('message').readMany({
-        filter: {room: {_eq: roomId}},
-        fields: ['id', 'content', 'user_created.*', 'date_created'],
-        sort: ['-date_created'],
-      });
-      set({messages: response.data, loading: false});
+
+      const query = `
+        query($roomId: String!) {
+          messages(filter: { room: { _eq: $roomId } }) {
+            id
+            content
+            user_created {
+              id
+              first_name
+              last_name
+              email
+              avatar
+            }
+            date_created
+          }
+        }
+      `;
+
+      const variables = {roomId};
+
+      const response = await client.query(query, variables);
+      set({messages: response.data.messages, loading: false});
     } catch (error: any) {
       set({error: error.message, loading: false});
     }
@@ -114,13 +139,26 @@ const useChatStore = create<ChatStore>((set, get) => ({
     const {appendedMessageIds} = get();
 
     try {
-      const {subscription} = await client.subscribe('message', {
-        event: 'create',
-        query: {
-          filter: {room: {_eq: roomId}},
-          fields: ['id', 'content', 'user_created.*', 'date_created'],
-        },
-      });
+      const query = `
+        subscription($roomId: String!) {
+          message(event: "create", filter: { room: { _eq: $roomId } }) {
+            id
+            content
+            user_created {
+              id
+              first_name
+              last_name
+              email
+              avatar
+            }
+            date_created
+          }
+        }
+      `;
+
+      const variables = {roomId};
+
+      const {subscription} = await client.subscribe(query, variables);
 
       for await (const message of subscription) {
         if (message?.data && Array.isArray(message.data)) {
