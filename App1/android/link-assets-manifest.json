@@ -1,0 +1,697 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/icons/BiomtricNew.svg",
+      "sha1": "51779282e87fe2636da1591de0b07908e097ae0b"
+    },
+    {
+      "path": "src/assets/icons/Calculator.svg",
+      "sha1": "d93385e2207da7bc04cb7d120e93da4eb4007739"
+    },
+    {
+      "path": "src/assets/icons/CalenderBlue.svg",
+      "sha1": "32c5f9a12d263f6a4b82e916ccd0ac3d8500bb72"
+    },
+    {
+      "path": "src/assets/icons/ETECLogoOrange.svg",
+      "sha1": "c2cdfc6c8f4ecebb6cc730408493d7187ae84846"
+    },
+    {
+      "path": "src/assets/icons/Gradient_BG.svg",
+      "sha1": "b4045856e12e9a075677eff11e1cd1b46f2f5991"
+    },
+    {
+      "path": "src/assets/icons/Organizational_structure.png",
+      "sha1": "0517a6af781ca7e85f64c3d233b3aa7703839a34"
+    },
+    {
+      "path": "src/assets/icons/Organizational_structure.svg",
+      "sha1": "507e0cd1af97ddbe1250f89bffb3c8b65ab15084"
+    },
+    {
+      "path": "src/assets/icons/UnFav.svg",
+      "sha1": "fe8be4412ba3659264ccb5a8d860467475e0627b"
+    },
+    {
+      "path": "src/assets/icons/activities_icon.svg",
+      "sha1": "4de64c4b283c0c1de936f85dc61de4a8fc00e21a"
+    },
+    {
+      "path": "src/assets/icons/add_icon.svg",
+      "sha1": "60ffa4389208cdbc68457cd28299c357cb84d34d"
+    },
+    {
+      "path": "src/assets/icons/alertIcon.svg",
+      "sha1": "c1ed7ee41df5138c3575d2fbc9f259efd29784bf"
+    },
+    {
+      "path": "src/assets/icons/app_updates.svg",
+      "sha1": "8f176b1656244d3ac3334893f1c929fbfb88b181"
+    },
+    {
+      "path": "src/assets/icons/arrow_drop_down.svg",
+      "sha1": "38100ae7d75c2b9d9ba4d93160975a85cc8a43aa"
+    },
+    {
+      "path": "src/assets/icons/arrow_left.png",
+      "sha1": "5f9af2d813d63b55d466c964fed57140d20ffc5e"
+    },
+    {
+      "path": "src/assets/icons/attendance_title_icon_warning.svg",
+      "sha1": "354e9bce91c329ce2ec0b35493c0d4b5665331cd"
+    },
+    {
+      "path": "src/assets/icons/avatar.svg",
+      "sha1": "5f4b6d627dd42552199fe472390aa2691ca82c7a"
+    },
+    {
+      "path": "src/assets/icons/background.svg",
+      "sha1": "96f403d713fa1cbb913148251bcde12e079ef005"
+    },
+    {
+      "path": "src/assets/icons/biometricaccess.svg",
+      "sha1": "37c08eeb78f72cdd0e2f8b4d0b142a5e428018ce"
+    },
+    {
+      "path": "src/assets/icons/calendar.svg",
+      "sha1": "f52d1e405782e7315542fc8028e07491b1e10463"
+    },
+    {
+      "path": "src/assets/icons/car.svg",
+      "sha1": "f462574a7aa4868f75fb4dc2b9319285ebdb3d0e"
+    },
+    {
+      "path": "src/assets/icons/center_1.svg",
+      "sha1": "df3d53a59f2ba35e790a73496e8ec4e89b6bc0b8"
+    },
+    {
+      "path": "src/assets/icons/center_2.svg",
+      "sha1": "f2415dbefa15e09137c8e5b9bdaa564949230bb5"
+    },
+    {
+      "path": "src/assets/icons/center_3.svg",
+      "sha1": "48d0f434dd4b5c762959b05f86f06d4eb2efc25d"
+    },
+    {
+      "path": "src/assets/icons/center_4.svg",
+      "sha1": "7c5f3cfa42eeb5ed1442e3e83894a338d5cd7a7e"
+    },
+    {
+      "path": "src/assets/icons/center_5.svg",
+      "sha1": "69ca9caa06bdd41faeb2c794af643a45079801d3"
+    },
+    {
+      "path": "src/assets/icons/check_icon.svg",
+      "sha1": "63929a7132fb4f64442192272700aa9f5e56a650"
+    },
+    {
+      "path": "src/assets/icons/check_in_time.png",
+      "sha1": "9b35f749d85afde858edc4baaa84564d19c2bd74"
+    },
+    {
+      "path": "src/assets/icons/check_out_time.png",
+      "sha1": "d37c500300ca802cc19082bb345fdd2541892140"
+    },
+    {
+      "path": "src/assets/icons/circular_icon.svg",
+      "sha1": "5306369e1e86b93dd1a6f7aa72ec6e08b6fa6911"
+    },
+    {
+      "path": "src/assets/icons/close_icon.svg",
+      "sha1": "39893fd803653de05c3873b710fe45dff30e7b7f"
+    },
+    {
+      "path": "src/assets/icons/communication_icon.svg",
+      "sha1": "75a6c4ac5e8c819518514cbb1eb07d10df87c94d"
+    },
+    {
+      "path": "src/assets/icons/employee_card_background.svg",
+      "sha1": "95d35cd9b32d026e0c164f25b564c8ab4597a274"
+    },
+    {
+      "path": "src/assets/icons/employee_id_icon.svg",
+      "sha1": "2c60c3c2c8f6ff52bc72059647c6e32d2e85c301"
+    },
+    {
+      "path": "src/assets/icons/employee_image.png",
+      "sha1": "2c76b053a806b21f15d1273a1c6d24de6a781fcd"
+    },
+    {
+      "path": "src/assets/icons/etec_logo.svg",
+      "sha1": "2c2e057c6edf438501065fe0bf39f2583a0d22f0"
+    },
+    {
+      "path": "src/assets/icons/etec_logo_splashScreen.svg",
+      "sha1": "28a4272fc7c53b050ce8508631b5e875125d9306"
+    },
+    {
+      "path": "src/assets/icons/etec_news_latters.svg",
+      "sha1": "f9f64a19c6d64277b736da7947903d9001b3cace"
+    },
+    {
+      "path": "src/assets/icons/favorite.svg",
+      "sha1": "91e453fa99d7c25678521c7fce27aad71da0351f"
+    },
+    {
+      "path": "src/assets/icons/first_toutorial_logo.svg",
+      "sha1": "0c23b9d87c22c1a7cefd2ef200bac2c36d66e090"
+    },
+    {
+      "path": "src/assets/icons/first_tutorial_image.svg",
+      "sha1": "3a5c05923f65cd57d8df5bd36115a65985ad94a5"
+    },
+    {
+      "path": "src/assets/icons/food.svg",
+      "sha1": "0e287c0a868d55da9c8321b11ba68d97461f2758"
+    },
+    {
+      "path": "src/assets/icons/funny_weekend.svg",
+      "sha1": "dc4b0acfda7114e4a82786a4da726576ba6df9c2"
+    },
+    {
+      "path": "src/assets/icons/half_cube.svg",
+      "sha1": "c0664aa08f71688cc750f0e8318c4d311e391d1d"
+    },
+    {
+      "path": "src/assets/icons/hi.svg",
+      "sha1": "97b880a8dd5660adf14ad04e0aa8d9d7061ea3e5"
+    },
+    {
+      "path": "src/assets/icons/hide_icon.svg",
+      "sha1": "92e0f67c27baa74a66aaf142484415c3becda9f5"
+    },
+    {
+      "path": "src/assets/icons/home.svg",
+      "sha1": "e8bfb9860de7568907594cc4a778a4190305ec75"
+    },
+    {
+      "path": "src/assets/icons/home_icon.svg",
+      "sha1": "e6a68d6420f845b076c172881fb4fcc2be3a463d"
+    },
+    {
+      "path": "src/assets/icons/important_links.svg",
+      "sha1": "d61b4cfe0ca5edd3afcafaf12eea783c6a35de6e"
+    },
+    {
+      "path": "src/assets/icons/index.ts",
+      "sha1": "b404f866f42b0c8dafe7f2b6aa8a7d38eed779c4"
+    },
+    {
+      "path": "src/assets/icons/lock.png",
+      "sha1": "9cc8c60a647249826debd8910df52a198eccceb9"
+    },
+    {
+      "path": "src/assets/icons/lock_icon.svg",
+      "sha1": "9dace5957c4ad26365510bd68aa4f21d3a7a9429"
+    },
+    {
+      "path": "src/assets/icons/lock_image.svg",
+      "sha1": "25463059450da7f6e5fa0bf8a06737a61be4c03e"
+    },
+    {
+      "path": "src/assets/icons/minus.svg",
+      "sha1": "d2832bbb8820d9ce9ae671217db38f0852c93eb6"
+    },
+    {
+      "path": "src/assets/icons/more_icon.svg",
+      "sha1": "6280b7088af2d9691c76ee761e75c86c149b72cf"
+    },
+    {
+      "path": "src/assets/icons/new_lock.png",
+      "sha1": "8014899a897b1ef56a51a8d9d18c70df4f7ffd35"
+    },
+    {
+      "path": "src/assets/icons/notificationList.svg",
+      "sha1": "87ed540c9cf8a96b80805e4284545d97c78f4ca1"
+    },
+    {
+      "path": "src/assets/icons/notification_icon.js",
+      "sha1": "479fd156666610899775432ce0d5d5e333484514"
+    },
+    {
+      "path": "src/assets/icons/password_invisible.svg",
+      "sha1": "b5c09225d5a73df3c59e3d3c5bfbcb67ceb613a4"
+    },
+    {
+      "path": "src/assets/icons/password_visible.svg",
+      "sha1": "6b93b4ca10a6654fd71abe6d50839d20f15ff300"
+    },
+    {
+      "path": "src/assets/icons/photos_album.svg",
+      "sha1": "c7f873f27e0cdec9bf5393d30765b2df2966c864"
+    },
+    {
+      "path": "src/assets/icons/plus.svg",
+      "sha1": "143a0a1695e6dc34ccb15ce7930c4ad2081f2466"
+    },
+    {
+      "path": "src/assets/icons/plus_icon.svg",
+      "sha1": "6aa4dd5044b2409394ebb80c1507a933c867dc23"
+    },
+    {
+      "path": "src/assets/icons/save_id_card.svg",
+      "sha1": "0e27b081f09ab225a3d99a72478072d63c0ba580"
+    },
+    {
+      "path": "src/assets/icons/second_tutorial_image.svg",
+      "sha1": "64f123d7ac8ad0e2be49f8ec30475c1fad51ff6d"
+    },
+    {
+      "path": "src/assets/icons/services_icon.svg",
+      "sha1": "e4b9787b62f446d2cca16f0a8f62a81bfc68f78e"
+    },
+    {
+      "path": "src/assets/icons/signout.svg",
+      "sha1": "e355da59f1ba29135309b982aa3de3339e9b6a39"
+    },
+    {
+      "path": "src/assets/icons/snap.svg",
+      "sha1": "fbde69ec8aba18fe1a186d01bd1a0ec1f3fd4082"
+    },
+    {
+      "path": "src/assets/icons/third_tutorial_image.svg",
+      "sha1": "0aa16922c569aefd32ba0616cb733692fb3b971c"
+    },
+    {
+      "path": "src/assets/icons/time_check.svg",
+      "sha1": "4c18bbaa40ea4796102688d03ebd732ede905a2d"
+    },
+    {
+      "path": "src/assets/icons/toast_error_icon.svg",
+      "sha1": "4767e6a076cd1f5e073465fa3b2a4e6abcbf79f3"
+    },
+    {
+      "path": "src/assets/icons/tutorial_first_image.png",
+      "sha1": "bf39e32c873cbfee67dd0d436e9937b090e7e6ec"
+    },
+    {
+      "path": "src/assets/icons/tutorial_second_image.png",
+      "sha1": "4e617635e9adca4814656d83f917d35c8252fabc"
+    },
+    {
+      "path": "src/assets/icons/tutorial_third_image.png",
+      "sha1": "a86b253405923168ecd6c0563404b8615d8e8425"
+    },
+    {
+      "path": "src/assets/icons/user_time.svg",
+      "sha1": "8ba695a03b579d49c9039adef0f114b58584c141"
+    },
+    {
+      "path": "src/assets/icons/verified.svg",
+      "sha1": "21e37b41518dc123eb7477b172ddb273b2c37187"
+    },
+    {
+      "path": "src/assets/icons/verifiedIcon.svg",
+      "sha1": "1c5037be5b0d9075868048d09ee8180cd0c295a3"
+    },
+    {
+      "path": "src/assets/icons/whatsapp.svg",
+      "sha1": "8194eae0a5d3b4f2873a5bf94661ac64536217de"
+    },
+    {
+      "path": "src/assets/icons/wosol.svg",
+      "sha1": "dca219ebc9aaf11ea0e84a000f7485eb0cc3c9ce"
+    },
+    {
+      "path": "src/assets/icons/wosol_logo_final.svg",
+      "sha1": "73d2406dab9e2331659aa8b3eb219f1732b2a940"
+    },
+    {
+      "path": "src/assets/icons/your_voice_heared.svg",
+      "sha1": "322d6ac933408cfb313525fb4908f1e0b13e1d95"
+    },
+    {
+      "path": "src/assets/images/AttendanceArrowLeft.svg",
+      "sha1": "cf98485f2ca866baf95f74c6923ef715ceda08ec"
+    },
+    {
+      "path": "src/assets/images/AttendanceCalender.svg",
+      "sha1": "b4e3d645a71f89144f11e0870ce4c16a4c218b74"
+    },
+    {
+      "path": "src/assets/images/ETEC_Logo_SplashScreen copy.svg",
+      "sha1": "28a4272fc7c53b050ce8508631b5e875125d9306"
+    },
+    {
+      "path": "src/assets/images/Gradient_BG.png",
+      "sha1": "6deba2ca62ef3cf763e76b194b21a4d44a1ccadc"
+    },
+    {
+      "path": "src/assets/images/LOGO_DIGI_CARD.png",
+      "sha1": "9260e10adf59695511090b15b24b222f07209301"
+    },
+    {
+      "path": "src/assets/images/LateLoginArrow.svg",
+      "sha1": "d1e5a7a189c733bc4472ed2305e717c18db2b2f3"
+    },
+    {
+      "path": "src/assets/images/LateLogoutArrow.svg",
+      "sha1": "9a122dedc1c7edd9d7b9edd4ca96e82ebb0b7fe2"
+    },
+    {
+      "path": "src/assets/images/LoginArrow.svg",
+      "sha1": "f64321e14162757d76519f1b60f682772fce3df3"
+    },
+    {
+      "path": "src/assets/images/LogoutArrow.svg",
+      "sha1": "4eb1abd09042e0d647627845098b3273bb476016"
+    },
+    {
+      "path": "src/assets/images/about_etec.svg",
+      "sha1": "2435e35670b1ba3a5d80af4669b05fbafc3ff4ef"
+    },
+    {
+      "path": "src/assets/images/alert_copy_icon.svg",
+      "sha1": "71f66de231f60b7573a8720bcc20f116e877cdf3"
+    },
+    {
+      "path": "src/assets/images/allbumIcon.svg",
+      "sha1": "03097834f2cab8111792a8a3b12103fc5e4cdb30"
+    },
+    {
+      "path": "src/assets/images/app_logo_home.svg",
+      "sha1": "6ac80c0bb5aa261467c39d0e551b7779aec47551"
+    },
+    {
+      "path": "src/assets/images/back_btn.js",
+      "sha1": "8482750b32d85420ecc594eae55470ddf23d3d38"
+    },
+    {
+      "path": "src/assets/images/bayt_test3.svg",
+      "sha1": "6973cc837b6aeab50f91ff2181b69c47e7d17e17"
+    },
+    {
+      "path": "src/assets/images/bg_without_rectangle.png",
+      "sha1": "0c292f7277656613a5db76ca15eaff927d4ed322"
+    },
+    {
+      "path": "src/assets/images/biometric-access.svg",
+      "sha1": "37c08eeb78f72cdd0e2f8b4d0b142a5e428018ce"
+    },
+    {
+      "path": "src/assets/images/bottom_logo.png",
+      "sha1": "5ee27c0237cc949d9077d99022fa0ca91e5285a7"
+    },
+    {
+      "path": "src/assets/images/calculator.png",
+      "sha1": "39512edc0d08284ae5fe75449b32e68a2f2f5959"
+    },
+    {
+      "path": "src/assets/images/calender.png",
+      "sha1": "1433e74c512566b74470889d476a94d3e66e9d0d"
+    },
+    {
+      "path": "src/assets/images/calender.svg",
+      "sha1": "d31900f4bac27423da534f745874a400da140307"
+    },
+    {
+      "path": "src/assets/images/calender_icon.svg",
+      "sha1": "9c8d5045f0c4f1bccac317cb7f0b8fd8bc4533e3"
+    },
+    {
+      "path": "src/assets/images/camera.svg",
+      "sha1": "3249d3229a849190c4189b14947143e52203ae00"
+    },
+    {
+      "path": "src/assets/images/cancel.png",
+      "sha1": "e0f1897bae1fc056be5f7a90f5377ebe6602f0f2"
+    },
+    {
+      "path": "src/assets/images/cancel.svg",
+      "sha1": "a0118462371834001156dd44bab1cf7286ef5a3c"
+    },
+    {
+      "path": "src/assets/images/check_internet_connection.png",
+      "sha1": "18df737c0ce2600b94af6f73308a5b4108555001"
+    },
+    {
+      "path": "src/assets/images/closed_arrow.svg",
+      "sha1": "cd7fae4333231404abb5922ff307467768c38a57"
+    },
+    {
+      "path": "src/assets/images/coming_soon.png",
+      "sha1": "abaa5e5bfbf569ef8c0a8cf99a9629081f28643d"
+    },
+    {
+      "path": "src/assets/images/commingSoon.svg",
+      "sha1": "8f6870217d709adfd558ab61af4342792f15a8d7"
+    },
+    {
+      "path": "src/assets/images/comming_soon.png",
+      "sha1": "d87bc18f50781daa6b038792bd29e7b704fd3422"
+    },
+    {
+      "path": "src/assets/images/copy_icon.svg",
+      "sha1": "5d83f1fa72442d60c8e599293ffa56655cce9599"
+    },
+    {
+      "path": "src/assets/images/default_image_for_albume.png",
+      "sha1": "c33ba4030034f8f2764fbb39f4f98c8f8cc5bd75"
+    },
+    {
+      "path": "src/assets/images/default_user_image.png",
+      "sha1": "84e2cecbaa13c4c44f3cec66a10387c7e6a0e934"
+    },
+    {
+      "path": "src/assets/images/dera.svg",
+      "sha1": "033177270dc57141a211775a0d0573842aeff7f3"
+    },
+    {
+      "path": "src/assets/images/element24.svg",
+      "sha1": "3a5c05923f65cd57d8df5bd36115a65985ad94a5"
+    },
+    {
+      "path": "src/assets/images/emoji.svg",
+      "sha1": "cb7bee0610cd7dd921711a2e2df7593300681302"
+    },
+    {
+      "path": "src/assets/images/employee_white_card.svg",
+      "sha1": "59fc5bfbf007717357b750b9ac9ed034b3bf6386"
+    },
+    {
+      "path": "src/assets/images/etec_bayt.svg",
+      "sha1": "e58004f445ff5609913818756515020e1868d676"
+    },
+    {
+      "path": "src/assets/images/etec_cbayt_test.jpg",
+      "sha1": "1cf146c8d317a1c0a010b69c1a6ad6709825a8e9"
+    },
+    {
+      "path": "src/assets/images/etec_logo.js",
+      "sha1": "f522560d4d772a89de48f37dafd3641b68a956ac"
+    },
+    {
+      "path": "src/assets/images/etec_logo_orange.svg",
+      "sha1": "997cec86ba6d39430e344d94d7db2fa18e574852"
+    },
+    {
+      "path": "src/assets/images/etec_principles.svg",
+      "sha1": "a0cb8457ec14a85fc89a498914c71cdfda3eb5f7"
+    },
+    {
+      "path": "src/assets/images/etec_vission.svg",
+      "sha1": "4eac8a0710833620a79312cb264fdb96b801e7d9"
+    },
+    {
+      "path": "src/assets/images/face_id.js",
+      "sha1": "578b60e73d8756cc10aca9f93ae1248efe285724"
+    },
+    {
+      "path": "src/assets/images/female_avatar.svg",
+      "sha1": "0bda85143d3c08fc3bd8425d72fb2c550f600ad2"
+    },
+    {
+      "path": "src/assets/images/fingerprint.png",
+      "sha1": "271f6d9f31745f45f0209a20e805b272033a1a64"
+    },
+    {
+      "path": "src/assets/images/green_rectangle.png",
+      "sha1": "52dcd939d971cc6598f643aea9e591ea86e9364b"
+    },
+    {
+      "path": "src/assets/images/group11.svg",
+      "sha1": "294cab2b35d0d26444bef34cb54929edfb3a615a"
+    },
+    {
+      "path": "src/assets/images/hide.png",
+      "sha1": "25dcf54322eaf8454bc276d0f8787d116dff3578"
+    },
+    {
+      "path": "src/assets/images/hide.svg",
+      "sha1": "03420a04df41501368999458d539f75cbfc50144"
+    },
+    {
+      "path": "src/assets/images/home_header_background.png",
+      "sha1": "6d8f92603a88d8e4e15cbd47761975d06bfd7f56"
+    },
+    {
+      "path": "src/assets/images/home_header_background.svg",
+      "sha1": "f659c1c5b2095bc6a0adfb5ec296245efb69a1fb"
+    },
+    {
+      "path": "src/assets/images/images_library.svg",
+      "sha1": "fa41718e1c10584b74246f16bf181959663ee43f"
+    },
+    {
+      "path": "src/assets/images/images_number.svg",
+      "sha1": "e0e676eb851d6395a42f701319001bcb3a68c4a1"
+    },
+    {
+      "path": "src/assets/images/img_placeholder.png",
+      "sha1": "7d2ba5349c57b61ac636cf9db4362ba9a2020aed"
+    },
+    {
+      "path": "src/assets/images/linear_background.svg",
+      "sha1": "17372dc53ad621ab3f474252be58f12bf421ca4f"
+    },
+    {
+      "path": "src/assets/images/logo_cubes.png",
+      "sha1": "98abe152d11eaa866d9a7e2632850741ce29388a"
+    },
+    {
+      "path": "src/assets/images/make.svg",
+      "sha1": "8277f0bcbfce6a34d89f9a62303716e355ce2ff9"
+    },
+    {
+      "path": "src/assets/images/money_info.svg",
+      "sha1": "4d01a2c5de128aeee327dace80b8c4adcfed72c4"
+    },
+    {
+      "path": "src/assets/images/msar.svg",
+      "sha1": "0ee6d50857c4f826a8e0920cc2ec99cbeee4ec3c"
+    },
+    {
+      "path": "src/assets/images/ncaaa.svg",
+      "sha1": "52caa634af439862e32087898b59d3a07c22e463"
+    },
+    {
+      "path": "src/assets/images/ncsee.svg",
+      "sha1": "209ddb874f1fa9411fcf758caa37f81680106d38"
+    },
+    {
+      "path": "src/assets/images/news_image.svg",
+      "sha1": "2a9c8ab106b55071075580f4d505649c664aa062"
+    },
+    {
+      "path": "src/assets/images/no_wifi.svg",
+      "sha1": "e8e2345ee71cf7d308b64f817264043ec56c7437"
+    },
+    {
+      "path": "src/assets/images/notFav.svg",
+      "sha1": "8c36b4f0e0807f6d3189bcb5caa160dd13d8abef"
+    },
+    {
+      "path": "src/assets/images/notifications_list.svg",
+      "sha1": "017498b5d672b364ffe1ec798b853252b40b636b"
+    },
+    {
+      "path": "src/assets/images/opened_arrow.svg",
+      "sha1": "a78e8bcc3f085f2af165e434600cab686cdf3d8b"
+    },
+    {
+      "path": "src/assets/images/otpImage.png",
+      "sha1": "78177f567935b26854617d9e2a3cd16e5f2a9301"
+    },
+    {
+      "path": "src/assets/images/photo_icon.svg",
+      "sha1": "822c86f63c80c7f9e844d4b125c5845e98bf8cd7"
+    },
+    {
+      "path": "src/assets/images/placeholder.png",
+      "sha1": "6716b784925271ae16c3cf044b11e09f36622733"
+    },
+    {
+      "path": "src/assets/images/placeholder.svg",
+      "sha1": "564f8f1488fe037fa5658867a912dfbe261d3934"
+    },
+    {
+      "path": "src/assets/images/postion_info.svg",
+      "sha1": "be59a89c2e4bf05099302ca08a2b8b9c8277e272"
+    },
+    {
+      "path": "src/assets/images/profile_icon.svg",
+      "sha1": "8502a3d82eda6b6d9c4177e75b102a43c07ff523"
+    },
+    {
+      "path": "src/assets/images/profile_info.svg",
+      "sha1": "8c9126711e21ff18337aaa32a02dfdda06189876"
+    },
+    {
+      "path": "src/assets/images/qyias_logo.svg",
+      "sha1": "a48c7bf923994affce802e810d81abdf7df1fe5c"
+    },
+    {
+      "path": "src/assets/images/sap.svg",
+      "sha1": "3197a94e03bb10637523becf6d4f4b1ab72a9424"
+    },
+    {
+      "path": "src/assets/images/save_card.png",
+      "sha1": "b05bb6afa42a907daa33613a31a1b386aa99b7e7"
+    },
+    {
+      "path": "src/assets/images/save_cards_view.svg",
+      "sha1": "7216653a0ef0d0fce8a9a0ec233d7c804b3af0c4"
+    },
+    {
+      "path": "src/assets/images/save_image.png",
+      "sha1": "a111c9112ca4033921d0be9415125f0d365050e7"
+    },
+    {
+      "path": "src/assets/images/save_jpg.svg",
+      "sha1": "0b9f3e9547e03beea28519a0a3e677c1e8060856"
+    },
+    {
+      "path": "src/assets/images/save_pdf.svg",
+      "sha1": "100c51383d8faf87664c86bea3e52d0a93e14740"
+    },
+    {
+      "path": "src/assets/images/time_check.png",
+      "sha1": "e8b396ed24c5c044dc85109f5d33f9952780bca9"
+    },
+    {
+      "path": "src/assets/images/touch_id.svg",
+      "sha1": "186c0a4918eac94c02203e2d3839a3f1adde1622"
+    },
+    {
+      "path": "src/assets/images/unhide.png",
+      "sha1": "f362a1764605ef7f4f4eb8860572ea0e1669cd83"
+    },
+    {
+      "path": "src/assets/images/unhide.svg",
+      "sha1": "5a2ee81c25da31cd4aaddfd18575a14b7abeedd8"
+    },
+    {
+      "path": "src/assets/images/unhide_blue.svg",
+      "sha1": "45b36f56b1176c75b52555e5b7d2725622b1e7a1"
+    },
+    {
+      "path": "src/assets/images/user_profile.png",
+      "sha1": "2a5e705cd62a2ba535cd65a2b3f888692cab5bec"
+    },
+    {
+      "path": "src/assets/images/user_profile.svg",
+      "sha1": "74d8e759aa75e05621e170b8c104c6a068e28c86"
+    },
+    {
+      "path": "src/assets/images/user_time.png",
+      "sha1": "59003f7878bff8b3d04f4082e283bcedc216dcd2"
+    },
+    {
+      "path": "src/assets/images/warning_circle.js",
+      "sha1": "58779db339b20da1124242adaed64eaa4211e953"
+    },
+    {
+      "path": "src/assets/images/white_calender.svg",
+      "sha1": "e1f118f85c81cdeb665dd332ea4c65759cc20da1"
+    },
+    {
+      "path": "src/assets/images/white_logo_wosol.png",
+      "sha1": "d7a11c4e30922bfe7cbc7f36128c73c0b0e0b585"
+    },
+    {
+      "path": "src/assets/images/wifi_slash.js",
+      "sha1": "a0a1832f2357ccbc6e87b2b678bb23c23dc11aba"
+    }
+  ]
+}

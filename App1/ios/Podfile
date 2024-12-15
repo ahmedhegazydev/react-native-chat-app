@@ -1,0 +1,97 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+def node_require(script)
+  require Pod::Executable.execute_command('node', ['-p',
+    "require.resolve('#{script}', {paths: [process.argv[1]]})", __dir__
+  ]).strip
+end
+
+# Use `node_require` to include both `react-native` and `react-native-permissions` scripts
+node_require('react-native/scripts/react_native_pods.rb')
+node_require('react-native-permissions/scripts/setup.rb')
+
+# Set this variable to use Firebase Analytics without Ad IDs
+$RNFirebaseAnalyticsWithoutAdIdSupport = true
+
+def __apply_Xcode_12_5_M1_post_install_workaround(installer)
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+  end
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES' if target.name == 'FBReactNativeSpec'
+    end
+  end
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+    end
+  end
+end
+
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
+
+# ⬇️ uncomment the permissions you need
+setup_permissions([
+  'PhotoLibrary',
+  'PhotoLibraryAddOnly', 
+  'FaceID'
+])
+
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
+workspace 'App1'
+
+target 'App1' do
+  config = use_native_modules!
+
+  # Modular Headers for Swift Pods
+  # pod 'Firebase', :modular_headers => true  
+  # pod 'FirebaseCore', :modular_headers => true 
+  # pod 'GoogleUtilities', :modular_headers => true
+  # pod 'FirebaseCoreExtension', :modular_headers => true 
+  # pod 'FirebaseInstallations', :modular_headers => true  
+  # pod 'GoogleDataTransport', :modular_headers => true  
+  # pod 'nanopb', :modular_headers => true
+
+  # Local path for BoringSSL-GRPC
+  # pod 'BoringSSL-GRPC', :path => '/Users/hegazy/boringssl'
+
+  flags = get_default_flags()
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    :hermes_enabled => flags[:hermes_enabled],
+    :fabric_enabled => flags[:fabric_enabled],
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  target 'App1Tests' do
+    inherit! :complete
+  end
+
+  post_install do |installer|
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
+
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        if target.name == "RNVectorIcons"
+          config.build_settings['EXCLUDED_SOURCE_FILE_NAMES'] = 'Fonts/*'
+        end
+      end
+    end
+
+    react_native_post_install(
+      installer,
+      :mac_catalyst_enabled => false
+    )
+  end
+end
