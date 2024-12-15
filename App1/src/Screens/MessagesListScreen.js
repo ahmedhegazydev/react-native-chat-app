@@ -1,27 +1,19 @@
 import React, {Component} from 'react';
 import {
   View,
-  ImageBackground,
-  FlatList,
   Text,
-  Alert,
   ActivityIndicator,
+  ImageBackground,
+  Alert,
 } from 'react-native';
-import {ms} from 'react-native-size-matters';
 import {useTheme} from '@react-navigation/native';
 import Header from '../Utils/Views/Header';
 import LabeledTextInput from '../Utils/Views/LabeledTextInput';
-import {light} from '../styles/colors';
 import CustomButton from '../Utils/Views/CustomButton';
 import chatStore from '../store/chatSlice';
 import roomMessagesStore from '../store/fetchRoomMessagesSlice';
-
-const AUTH_TOKENS = {
-  user1: 'I5BbIZ2F973BBSDDO2juOWZfrk8_q9Qf',
-  user2: 'hGEfdrLdLBmn-EcaU-dfRpGRt3kzyofH',
-};
-
-let currentUser = 'user2';
+import {FlashList} from '@shopify/flash-list';
+import {light} from '../styles/colors';
 
 const withTheme = WrappedComponent => props => {
   const theme = useTheme();
@@ -50,25 +42,9 @@ class MessagesListScreen extends Component {
     }
   }
 
-  subscribeToStore = () => {
-    this.unsubscribe = roomMessagesStore.subscribe(() => {
-      const {messages} = roomMessagesStore.getState();
-      this.setState({messages});
-    });
-  };
-
   componentWillUnmount() {
     if (this.unsubscribe) {
       this.unsubscribe();
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      this.props.messages?.length > 0 &&
-      prevProps.messages?.length !== this.props.messages?.length
-    ) {
-      this.flatListRef.current?.scrollToIndex({index: 0, animated: true});
     }
   }
 
@@ -167,23 +143,23 @@ class MessagesListScreen extends Component {
               <Text>Loading messages...</Text>
             )}
             {error && <Text>Error: {error}</Text>}
-            <FlatList
-              ref={this.flatListRef}
-              data={this.state.messages || []}
+
+            <FlashList
+              data={messages}
               keyExtractor={item => item?.id?.toString()}
               renderItem={this.renderMessage}
               inverted={true}
               onEndReached={this.loadMoreMessages}
               onEndReachedThreshold={0.1}
               ListFooterComponent={
-                this.state.loadingMore && (
+                loadingMore ? (
                   <View style={styles.footer}>
                     <ActivityIndicator size="small" color="#666" />
                     <Text style={styles.footerText}>
                       Loading more messages...
                     </Text>
                   </View>
-                )
+                ) : null
               }
             />
 
@@ -197,11 +173,7 @@ class MessagesListScreen extends Component {
                 inputStyle={styles.inputStyle}
               />
               <CustomButton
-                style={[
-                  {
-                    backgroundColor: light.primary,
-                  },
-                ]}
+                style={{backgroundColor: light.primary}}
                 title="Send"
                 onPress={this.handleSendMessage}
               />
@@ -224,52 +196,51 @@ const styles = {
   },
   content: {
     flex: 1,
-    paddingHorizontal: ms(16),
-    paddingBottom: ms(10),
+    paddingHorizontal: 16,
+    paddingBottom: 10,
   },
   messageItem: {
-    marginBottom: ms(12),
-    padding: ms(16),
+    marginBottom: 12,
+    padding: 16,
     backgroundColor: '#fff',
-    borderRadius: ms(8),
+    borderRadius: 8,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowRadius: ms(4),
+    shadowRadius: 4,
     elevation: 3,
   },
   messageContent: {
-    fontSize: ms(16),
+    fontSize: 16,
     color: '#333',
   },
   messageSender: {
-    fontSize: ms(14),
+    fontSize: 14,
     color: '#666',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: ms(10),
-    paddingVertical: ms(10),
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     backgroundColor: '#f8f8f8',
     borderTopWidth: 1,
     borderColor: '#ddd',
   },
   inputField: {
     flex: 1,
-    marginVertical: ms(5),
-    marginRight: ms(10),
+    marginVertical: 5,
+    marginRight: 10,
     borderColor: light.neutral2,
   },
   inputStyle: {
-    marginTop: ms(5),
+    marginTop: 5,
   },
-  header: {
-    paddingVertical: ms(10),
+  footer: {
     alignItems: 'center',
+    padding: 10,
   },
-  headerText: {
-    marginTop: ms(5),
-    fontSize: ms(14),
+  footerText: {
+    fontSize: 14,
     color: '#666',
   },
 };

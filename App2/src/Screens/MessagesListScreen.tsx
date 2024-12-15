@@ -2,28 +2,18 @@ import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   ImageBackground,
-  FlatList,
   Text,
-  Alert,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {ms} from 'react-native-size-matters';
 import {useTheme} from '@react-navigation/native';
 import Header from '../Utils/Views/Header';
 import useChatStore from '../store/chatSlice';
 import LabeledTextInput from '../Utils/Views/LabeledTextInput';
-import {light} from '../styles/colors';
 import CustomButton from '../Utils/Views/CustomButton';
-import useRoomMessagesStore, {
-  appendMessage,
-} from '../store/fetchRoomMessagesSlice';
-
-const AUTH_TOKENS = {
-  user1: 'I5BbIZ2F973BBSDDO2juOWZfrk8_q9Qf',
-  user2: 'hGEfdrLdLBmn-EcaU-dfRpGRt3kzyofH',
-};
-
-let currentUser = 'user1';
+import useRoomMessagesStore from '../store/fetchRoomMessagesSlice';
+import {FlashList} from '@shopify/flash-list';
 
 interface Message {
   id: number;
@@ -49,7 +39,8 @@ const MessagesListScreen: React.FC<MessagesListScreenProps> = props => {
   const [newMessage, setNewMessage] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
-  const flatListRef = useRef<FlatList<Message>>(null);
+
+  const flatListRef = useRef<FlashList<Message>>(null);
 
   const {subscribeToMessages, sendMessageToRoom} = useChatStore();
   const {messages, loading, hasMore, error, fetchMessagesForRoom} =
@@ -87,27 +78,8 @@ const MessagesListScreen: React.FC<MessagesListScreenProps> = props => {
       return;
     }
 
-    const simulatedMessage = {
-      id: Date.now(),
-      content: newMessage,
-      user_created: {id: AUTH_TOKENS[currentUser], name: 'You'},
-      date_created: new Date().toISOString(),
-    };
-
     try {
-      console.log('Sending message to room:', {
-        roomId: room.id,
-        messageContent: newMessage,
-      });
-
       await sendMessageToRoom({roomId: room.id, messageContent: newMessage});
-
-      console.log('Message sent successfully:', {
-        roomId: room.id,
-        messageContent: newMessage,
-      });
-
-      // appendMessage(simulatedMessage);
       setNewMessage('');
     } catch (error) {
       console.error('Failed to send message:', error);
@@ -138,7 +110,7 @@ const MessagesListScreen: React.FC<MessagesListScreenProps> = props => {
         <View style={styles.content}>
           {loading && page === 1 && <Text>Loading messages...</Text>}
           {error && <Text>Error: {error}</Text>}
-          <FlatList
+          <FlashList
             ref={flatListRef}
             data={messages}
             keyExtractor={item => item?.id?.toString() || ''}
@@ -165,11 +137,7 @@ const MessagesListScreen: React.FC<MessagesListScreenProps> = props => {
               inputStyle={styles.inputStyle}
             />
             <CustomButton
-              style={[
-                {
-                  backgroundColor: light.primary,
-                },
-              ]}
+              style={{backgroundColor: '#303056'}}
               title="Send"
               onPress={handleSendMessage}
             />
@@ -225,7 +193,7 @@ const styles = {
     flex: 1,
     marginVertical: ms(5),
     marginRight: ms(10),
-    borderColor: light.neutral2,
+    borderColor: '#303056',
   },
   inputStyle: {
     marginTop: ms(5),

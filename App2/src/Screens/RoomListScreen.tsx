@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   ImageBackground,
   Text,
-  FlatList,
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters';
-import { useTheme } from '@react-navigation/native';
-import { ScreenName } from '../Constants/Constants';
+import {ScaledSheet} from 'react-native-size-matters';
+import {useTheme} from '@react-navigation/native';
 import Header from '../Utils/Views/Header';
 import useRoomsStore from '../store/fetchRoomsSlice';
+import {FlashList} from '@shopify/flash-list';
 
 interface Room {
   id: string;
@@ -26,17 +25,17 @@ interface RoomListScreenProps {
   theme: any;
 }
 
-const RoomListScreen: React.FC<RoomListScreenProps> = (props) => {
+const RoomListScreen: React.FC<RoomListScreenProps> = props => {
   const color = props.theme;
-  const { rooms, loading, error, fetchRooms } = useRoomsStore();
+  const {rooms, loading, error, fetchRooms} = useRoomsStore();
 
   useEffect(() => {
     fetchRooms();
   }, [fetchRooms]);
 
-  const renderRoomItem = ({ item }: { item: Room }) => {
+  const renderRoomItem = ({item}: {item: Room}) => {
     const members = item.members
-      ? item.members.map((member) => `User-${member}`).join(', ')
+      ? item.members.map(member => `User-${member}`).join(', ')
       : 'No members';
     const lastMessage = item.last_message || 'No messages yet';
     const formattedDate = new Intl.DateTimeFormat('en-US', {
@@ -48,8 +47,7 @@ const RoomListScreen: React.FC<RoomListScreenProps> = (props) => {
     return (
       <TouchableOpacity
         style={styles.roomItem}
-        onPress={() => props.navigation.navigate('MessagesListScreen', item)}
-      >
+        onPress={() => props.navigation.navigate('MessagesListScreen', item)}>
         <Text style={styles.roomTitle}>Name: {item.name}</Text>
         <Text style={styles.roomDescription}>ID: {item.id}</Text>
         <Text style={styles.roomDescription}>Created: {formattedDate}</Text>
@@ -64,8 +62,7 @@ const RoomListScreen: React.FC<RoomListScreenProps> = (props) => {
       <ImageBackground
         source={require('../assets/background_images/ig_background.png')}
         resizeMode="cover"
-        style={styles.background}
-      >
+        style={styles.background}>
         <Header navigation={props.navigation} colors={color} />
         <View style={styles.content}>
           {loading && <ActivityIndicator size="large" />}
@@ -74,12 +71,15 @@ const RoomListScreen: React.FC<RoomListScreenProps> = (props) => {
             <Text style={styles.noRoomsText}>No rooms available.</Text>
           )}
           {!loading && rooms?.length > 0 && (
-            <FlatList
-              data={rooms}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={renderRoomItem}
-              contentContainerStyle={styles.flatListContent}
-            />
+            <View style={styles.flashListWrapper}>
+              <FlashList
+                data={rooms}
+                keyExtractor={item => item.id.toString()}
+                renderItem={renderRoomItem}
+                contentContainerStyle={styles.flashListContent}
+                estimatedItemSize={100}
+              />
+            </View>
           )}
         </View>
       </ImageBackground>
@@ -132,7 +132,11 @@ const styles = ScaledSheet.create({
     color: '#333',
     textAlign: 'center',
   },
-  flatListContent: {
+  flashListWrapper: {
+    flex: 1,
+    width: '100%',
+  },
+  flashListContent: {
     paddingBottom: '16@vs',
   },
 });

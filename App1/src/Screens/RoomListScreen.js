@@ -1,20 +1,12 @@
 import React, {Component} from 'react';
-import {
-  View,
-  ImageBackground,
-  Text,
-  FlatList,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
-import {useTheme} from '@react-navigation/native'; // Use the hook here
+import {View, Text, ActivityIndicator, TouchableOpacity} from 'react-native';
+import {useTheme} from '@react-navigation/native';
 import Header from '../Utils/Views/Header';
 import roomsStore from '../store/fetchRoomsSlice';
+import {FlashList} from '@shopify/flash-list';
 
-// Custom Higher-Order Component to Inject Theme
 const withTheme = WrappedComponent => props => {
-  const theme = useTheme(); // Retrieve theme using the hook
+  const theme = useTheme();
   return <WrappedComponent {...props} theme={theme} />;
 };
 
@@ -26,8 +18,6 @@ class RoomListScreen extends Component {
       loading: false,
       error: null,
     };
-
-    // Instantiate the RoomsStore class
     this.roomsStore = roomsStore;
   }
 
@@ -35,12 +25,11 @@ class RoomListScreen extends Component {
     this.fetchRooms();
   }
 
-  // Fetch rooms and handle loading and error states
   fetchRooms = async () => {
     this.setState({loading: true, error: null});
     try {
-      await this.roomsStore.fetchRooms(); // Call the class method
-      const {rooms, error} = this.roomsStore.getState(); // Get updated state from RoomsStore
+      await this.roomsStore.fetchRooms();
+      const {rooms, error} = this.roomsStore.getState();
       if (error) {
         this.setState({error, loading: false});
       } else {
@@ -78,85 +67,81 @@ class RoomListScreen extends Component {
   };
 
   render() {
-    const {theme} = this.props; // Access the theme from props
+    const {theme} = this.props;
     const {rooms, loading, error} = this.state;
 
     return (
       <View style={styles.container}>
-        <ImageBackground
-          source={require('../assets/background_images/ig_background.png')}
-          resizeMode="cover"
-          style={styles.background}>
-          <Header navigation={this.props.navigation} colors={theme} />
-          <View style={styles.content}>
-            {loading && <ActivityIndicator size="large" />}
-            {error && <Text style={styles.errorText}>{error}</Text>}
-            {!loading && rooms?.length === 0 && (
-              <Text style={styles.noRoomsText}>No rooms available.</Text>
-            )}
-            {!loading && rooms?.length > 0 && (
-              <FlatList
+        <Header navigation={this.props.navigation} colors={theme} />
+        <View style={styles.content}>
+          {loading && <ActivityIndicator size="large" />}
+          {error && <Text style={styles.errorText}>{error}</Text>}
+          {!loading && rooms && rooms.length === 0 && (
+            <Text style={styles.noRoomsText}>No rooms available.</Text>
+          )}
+          {!loading && rooms && rooms.length > 0 && (
+            <View style={styles.flashListContainer}>
+              <FlashList
                 data={rooms}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={item => item?.id?.toString()}
                 renderItem={this.renderRoomItem}
-                contentContainerStyle={styles.flatListContent}
+                estimatedItemSize={156}
               />
-            )}
-          </View>
-        </ImageBackground>
+            </View>
+          )}
+        </View>
       </View>
     );
   }
 }
 
-const styles = ScaledSheet.create({
+const styles = {
   container: {
     flex: 1,
     backgroundColor: '#f8f8f8',
-  },
-  background: {
-    width: '100%',
-    height: '100%',
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '16@s',
+    padding: 16,
+    width: '100%',
   },
   roomItem: {
     width: '100%',
-    padding: '16@s',
-    marginVertical: '8@vs',
+    padding: 16,
+    marginVertical: 8,
     backgroundColor: '#fff',
-    borderRadius: '8@s',
+    borderRadius: 8,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowRadius: '4@s',
+    shadowRadius: 4,
     elevation: 3,
   },
   roomTitle: {
-    fontSize: '18@s',
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
   },
   roomDescription: {
-    fontSize: '14@s',
+    fontSize: 14,
     color: '#666',
   },
   errorText: {
-    fontSize: '16@s',
+    fontSize: 16,
     color: 'red',
     textAlign: 'center',
   },
   noRoomsText: {
-    fontSize: '16@s',
+    fontSize: 16,
     color: '#333',
     textAlign: 'center',
   },
-  flatListContent: {
-    paddingBottom: '16@vs',
+  flashListContainer: {
+    width: '100%',
+    height: '80%',
+    marginTop: 16,
   },
-});
+};
 
 export default withTheme(RoomListScreen);
