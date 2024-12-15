@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, ImageBackground, Text, Image, StyleSheet} from 'react-native';
-import {ms} from 'react-native-size-matters';
 import {useTheme} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import ErrorBoundary from 'react-native-error-boundary';
 import CheckInternetConnection from '../assets/images/check_internet_connection.png';
 import Header from '../Utils/Views/Header';
-import {fonts} from '../styles/fonts';
 import {light} from '../styles/colors';
+import {fonts} from '../styles/fonts';
 
 interface ErrorScreenProps {
   navigation: any;
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: light.primary,
-    marginVertical: ms(16),
+    marginVertical: 16,
     ...fonts.subTitleSemiBold20,
   },
 });
@@ -65,5 +65,9 @@ const styles = StyleSheet.create({
 export default function (props: any) {
   const theme = useTheme();
   const t = useTranslation();
-  return <ErrorScreen {...props} theme={theme.colors} t={t} />;
+  return (
+    <ErrorBoundary FallbackComponent={() => <Text>Something went wrong.</Text>}>
+      <ErrorScreen {...props} theme={theme.colors} t={t} />
+    </ErrorBoundary>
+  );
 }

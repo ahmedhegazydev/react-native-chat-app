@@ -1,15 +1,13 @@
 import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import ErrorBoundary from 'react-native-error-boundary';
 import {View, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from '@pietile-native-kit/keyboard-aware-scrollview';
-import {ms} from 'react-native-size-matters';
 import Toast from 'react-native-toast-message';
 import {useNavigation, useTheme} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {apiStorage} from '../Utils/AsyncStorageManager';
 import {light} from '../styles/colors';
-import {ScreenName} from '../Constants/Constants';
 import CustomButton from '../Utils/Views/CustomButton';
 import useAuthStore from '../store/authSlice';
 
@@ -19,10 +17,9 @@ interface LoginScreenProps {
   t: any;
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = props => {
+const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [buttonTriggered, setButtonTriggered] = useState<string>('Login');
   const [isLoginBtnPressed, setIsLoginBtnPressed] = useState<boolean>(false);
   const {postAuthLogin} = useAuthStore();
 
@@ -33,7 +30,7 @@ const LoginScreen: React.FC<LoginScreenProps> = props => {
         setTimeout(() => {
           setIsLoginBtnPressed(false);
           apiStorage.setItem('userNameDevOrPrd', username);
-          props.navigation.navigate('Tab');
+          navigation.navigate('Tab');
         }, 2000);
       }
     } catch (error) {
@@ -65,13 +62,10 @@ const LoginScreen: React.FC<LoginScreenProps> = props => {
             style={[
               styles.loginButton,
               {
-                backgroundColor:
-                  buttonTriggered === 'Login' ? light.primary : light.neutral2,
+                backgroundColor: light.primary,
               },
             ]}
-            onPress={() => {
-              handleLoginPress();
-            }}
+            onPress={handleLoginPress}
           />
         </View>
       </KeyboardAwareScrollView>
@@ -88,7 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    padding: ms(20),
+    padding: 20,
   },
   loginButton: {
     marginBottom: 30,

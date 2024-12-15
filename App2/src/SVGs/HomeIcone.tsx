@@ -2,7 +2,12 @@ import React from 'react';
 import CustomIcon from '../Utils/CustomSvg';
 import {Path} from 'react-native-svg';
 
-const HomeIcon = ({width, height}) => (
+interface HomeIconProps {
+  width: string | number;
+  height: string | number;
+}
+
+const HomeIcon: React.FC<HomeIconProps> = ({width, height}) => (
   <CustomIcon width={width} height={height} viewBox="0 0 20 20">
     <Path
       fill="#4C3D8F"

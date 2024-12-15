@@ -1,41 +1,26 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
-import {I18nManager, View, Text, Modal, Image, Platform} from 'react-native';
-import {NavigationContainer, CommonActions} from '@react-navigation/native';
+import {I18nManager, View, Modal, Image, Platform, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import RNRestart from 'react-native-restart';
-import RNLocalize from 'react-native-localize';
 import NetInfo from '@react-native-community/netinfo';
 import SplashScreen from './src/Screens/SplashScreen';
-import TabNavigator, {TabProvider} from './src/Navigation/TabNavigator';
+import TabNavigatorWithErrorBoundary, {
+  TabProvider,
+} from './src/Navigation/TabNavigator';
 import LoginScreen from './src/Screens/LoginScreen';
-import ErrorScreen from './src/Screens/ErrorScreen';
+import ErrorScreenWithBoundary from './src/Screens/ErrorScreen';
 import {navigationRef} from './src/Utils/Common';
 import i18n from './src/Localization/i18n';
 import CheckInternetConnection from './src/assets/images/check_internet_connection.png';
 import CustomButton from './src/Utils/Views/CustomButton';
 import {light} from './src/styles/colors';
-import {fonts} from './src/styles/fonts';
-import {ms, ScaledSheet} from 'react-native-size-matters';
 import {I18nextProvider} from 'react-i18next';
 import {apiStorage} from './src/Utils/AsyncStorageManager';
 
 const Stack = createStackNavigator();
-
-async function logout(navigation) {
-  await apiStorage.removeItem('auth');
-  await apiStorage.removeItem('appLaunched');
-  await apiStorage.removeItem('tokenExpire');
-  await apiStorage.removeItem('SAPtoken');
-
-  navigation.dispatch(
-    CommonActions.reset({
-      index: 0,
-      routes: [{name: 'Login'}],
-    }),
-  );
-}
 
 class App extends Component {
   constructor(props) {
@@ -48,10 +33,8 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    // Check and set RTL
     await this.checkAndSetRTL();
 
-    // Monitor network connectivity
     this.unsubscribe = NetInfo.addEventListener(state => {
       this.setState({
         isConnected: state.isConnected,
@@ -61,7 +44,6 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    // Cleanup network listener
     if (this.unsubscribe) this.unsubscribe();
   }
 
@@ -87,18 +69,16 @@ class App extends Component {
     failure: props => (
       <BaseToast
         {...props}
-        style={styles.toastFailure}
-        contentContainerStyle={styles.toastContent}
-        text1Style={styles.toastText1}
-        text2Style={styles.toastText2}
+        style={{backgroundColor: light.warning, width: '100%'}}
+        text1Style={{color: light.white}}
+        text2Style={{color: light.white}}
       />
     ),
     Success: props => (
       <BaseToast
         {...props}
-        style={styles.toastSuccess}
-        contentContainerStyle={styles.toastContent}
-        text1Style={styles.toastTextSuccess}
+        style={{backgroundColor: light.sucessToast, width: '100%'}}
+        text1Style={{color: light.sucessToastMsg}}
       />
     ),
   });
@@ -108,26 +88,51 @@ class App extends Component {
 
     return (
       <I18nextProvider i18n={i18n}>
-        <View style={styles.container}>
+        <View style={{flex: 1, backgroundColor: light.white}}>
           {!isConnected && (
             <Modal
               onRequestClose={this.toggleWifiPopup}
               transparent
               visible={!hideModal}>
-              <View style={styles.modalOverlay}>
-                <View style={styles.modalContent}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'rgba(0,0,0,0.5)',
+                }}>
+                <View
+                  style={{
+                    backgroundColor: light.white,
+                    padding: 20,
+                    borderRadius: 20,
+                    alignItems: 'center',
+                  }}>
                   <Image
                     source={CheckInternetConnection}
                     resizeMode="contain"
-                    style={styles.modalImage}
+                    style={{width: 100, height: 100}}
                   />
-                  <Text style={styles.modalText}>
+                  <Text
+                    style={{
+                      color: light.primary,
+                      fontFamily: 'IBM Plex Sans',
+                      fontWeight: '600',
+                      fontSize: 20,
+                      textAlign: 'center',
+                      marginVertical: 10,
+                    }}>
                     يبدو أنك غير متصل بالإنترنت، يرجى الاتصال بالإنترنت
                     والمحاولة مرة أخرى
                   </Text>
                   <CustomButton
-                    style={styles.customButton}
-                    textStyle={styles.customButtonText}
+                    style={{
+                      flex: 1,
+                      marginTop: 20,
+                      marginRight: 5,
+                      backgroundColor: '#4C3C8D',
+                    }}
+                    textStyle={{color: '#fff', fontSize: 16}}
                     title="فهمت"
                     onPress={this.toggleWifiPopup}
                   />
@@ -139,7 +144,7 @@ class App extends Component {
             <NavigationContainer ref={navigationRef}>
               <Stack.Navigator>
                 <Stack.Screen
-                  name="splash"
+                  name="SplashScreen"
                   component={SplashScreen}
                   options={{headerShown: false}}
                 />
@@ -150,12 +155,12 @@ class App extends Component {
                 />
                 <Stack.Screen
                   name="Tab"
-                  component={TabNavigator}
+                  component={TabNavigatorWithErrorBoundary}
                   options={{headerShown: false}}
                 />
                 <Stack.Screen
                   name="ErrorScreen"
-                  component={ErrorScreen}
+                  component={ErrorScreenWithBoundary}
                   options={{headerShown: false}}
                 />
               </Stack.Navigator>
@@ -167,84 +172,5 @@ class App extends Component {
     );
   }
 }
-
-const styles = ScaledSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: light.white,
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    backgroundColor: light.white,
-    padding: '20@s',
-    borderRadius: '20@s',
-    alignItems: 'center',
-  },
-  modalImage: {
-    width: '100@s',
-    height: '100@s',
-  },
-  modalText: {
-    color: light.primary,
-    fontFamily: fonts.IBMPlexSansArabicSemiBold,
-    fontWeight: '600',
-    fontSize: '20@s',
-    lineHeight: '28@s',
-    textAlign: 'center',
-    marginVertical: '10@s',
-  },
-  customButton: {
-    flex: 1,
-    marginTop: '20@s',
-    marginRight: '5@s',
-    backgroundColor: '#4C3C8D',
-  },
-  customButtonText: {
-    color: '#fff',
-    fontFamily: fonts.IBMPlexSansArabicMedium,
-    fontSize: '16@s',
-  },
-  toastFailure: {
-    borderLeftColor: light.warning,
-    backgroundColor: light.warning,
-    width: '100%',
-    justifyContent: 'center',
-  },
-  toastSuccess: {
-    borderLeftColor: light.sucessToast,
-    backgroundColor: light.sucessToast,
-    width: '100%',
-    justifyContent: 'center',
-  },
-  toastContent: {
-    paddingHorizontal: 0,
-  },
-  toastText1: {
-    textAlign: 'center',
-    fontSize: '12@s',
-    fontFamily: fonts.IBMPlexSansArabicBold,
-    fontWeight: '600',
-    color: light.white,
-  },
-  toastText2: {
-    fontFamily: fonts.IBMPlexSansArabicBold,
-    textAlign: 'center',
-    fontSize: '12@s',
-    fontWeight: '400',
-    color: light.white,
-  },
-  toastTextSuccess: {
-    textAlign: 'center',
-    fontSize: '14@s',
-    fontFamily: fonts.IBMPlexSansArabicBold,
-    fontWeight: '400',
-    color: light.sucessToastMsg,
-  },
-});
 
 export default App;

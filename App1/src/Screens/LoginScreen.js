@@ -3,24 +3,20 @@ import React, {Component} from 'react';
 import ErrorBoundary from 'react-native-error-boundary';
 import {View} from 'react-native';
 import {KeyboardAwareScrollView} from '@pietile-native-kit/keyboard-aware-scrollview';
-import {ms} from 'react-native-size-matters';
 import Toast from 'react-native-toast-message';
 import {useTheme} from '@react-navigation/native';
 import {withTranslation} from 'react-i18next';
 import {apiStorage} from '../Utils/AsyncStorageManager';
 import {light} from '../styles/colors';
 import CustomButton from '../Utils/Views/CustomButton';
-import useAuthStore from '../store/authSlice';
-import {Text} from 'react-native-svg';
 import authService from '../store/authSlice';
+import ErrorScreenWithBoundary from './ErrorScreen';
 
-// Custom HOC to inject the theme using useTheme
 const withTheme = WrappedComponent => props => {
   const theme = useTheme();
   return <WrappedComponent {...props} theme={theme} />;
 };
 
-// Define the custom toast configuration
 const toastConfig = {
   failure: ({text1, text2}) => (
     <View style={customToastStyles.container}>
@@ -44,7 +40,6 @@ class LoginScreen extends Component {
   postLogin = async () => {
     const {username, password} = this.state;
     try {
-      // Use the postAuthLogin from useAuthStore
       const result = await authService.postAuthLogin(username, password);
       if (result) {
         setTimeout(() => {
@@ -56,7 +51,7 @@ class LoginScreen extends Component {
     } catch (error) {
       this.setState({isLoginBtnPressed: false});
       Toast.show({
-        type: 'failure', // Use the custom toast type
+        type: 'failure',
         text1: 'Invalid username or password.',
         text2: 'Please try again or click "Forgot Password."',
       });
@@ -73,34 +68,33 @@ class LoginScreen extends Component {
   };
 
   render() {
-    const {theme} = this.props; // Access the theme from props
+    const {theme} = this.props;
     const {isLoginBtnPressed, buttonTriggered} = this.state;
 
     return (
-      <>
-        <ErrorBoundary onError={this.errorHandler}>
-          <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-            <View style={styles.innerContainer}>
-              <CustomButton
-                loading={isLoginBtnPressed}
-                title="Go To Chatting"
-                style={[
-                  styles.loginButton,
-                  {
-                    backgroundColor:
-                      buttonTriggered === 'Login'
-                        ? light.primary
-                        : light.neutral2,
-                  },
-                ]}
-                onPress={this.handleLoginPress}
-              />
-            </View>
-          </KeyboardAwareScrollView>
-        </ErrorBoundary>
-        {/* Toast Component */}
-        {/* <Toast config={toastConfig} /> */}
-      </>
+      <ErrorBoundary
+        FallbackComponent={ErrorScreenWithBoundary}
+        onError={this.errorHandler}>
+        <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+          <View style={styles.innerContainer}>
+            <CustomButton
+              loading={isLoginBtnPressed}
+              title="Go To Chatting"
+              style={[
+                styles.loginButton,
+                {
+                  backgroundColor:
+                    buttonTriggered === 'Login'
+                      ? light.primary
+                      : light.neutral2,
+                },
+              ]}
+              onPress={this.handleLoginPress}
+            />
+          </View>
+        </KeyboardAwareScrollView>
+        <Toast config={toastConfig} />
+      </ErrorBoundary>
     );
   }
 }
@@ -114,7 +108,7 @@ const styles = {
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    padding: ms(20),
+    padding: 20,
   },
   loginButton: {
     marginBottom: 30,
@@ -142,5 +136,4 @@ const customToastStyles = {
   },
 };
 
-// Export the LoginScreen with both theme and translation injected
 export default withTranslation()(withTheme(LoginScreen));

@@ -1,44 +1,31 @@
 import React, {Component} from 'react';
-import {View, Text, StatusBar, Platform, StyleSheet} from 'react-native';
-import {ms} from 'react-native-size-matters';
+import {View, Text, StatusBar, Platform} from 'react-native';
 import {apiStorage} from '../Utils/AsyncStorageManager';
 import {light} from '../styles/colors';
+import ErrorBoundary from 'react-native-error-boundary';
 
 class SplashScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLoggedIn: null,
-      isAppUpdateNeeded: null,
-    };
+    this.state = {};
   }
 
   async componentDidMount() {
-    // Set the status bar properties
+    console.log(this.props); // Check if navigation is passed
+
     StatusBar.setBackgroundColor(light.primary);
     StatusBar.setBarStyle(
       Platform.OS === 'android' ? 'light-content' : 'dark-content',
     );
 
     try {
-      const [isAppUpdateNeeded, isLoggedIn] = await Promise.all([
-        apiStorage.getItem('appNeedUpdate'),
-        apiStorage.getItem('auth'),
-      ]);
+      this.setState({});
 
-      // Update state with the fetched values
-      this.setState({
-        isAppUpdateNeeded,
-        isLoggedIn,
-      });
-
-      // Navigate after a delay based on the fetched values
       setTimeout(() => {
-        const {isLoggedIn, isAppUpdateNeeded} = this.state;
-        if (isLoggedIn === 'logedin' && isAppUpdateNeeded === 'false') {
-          this.props.navigation.replace('Tab');
-        } else {
+        if (this.props.navigation) {
           this.props.navigation.replace('Login');
+        } else {
+          console.error('Navigation prop is undefined');
         }
       }, 3000);
     } catch (error) {
@@ -59,7 +46,7 @@ class SplashScreen extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   root: {
     flex: 1,
     justifyContent: 'center',
@@ -70,7 +57,7 @@ const styles = StyleSheet.create({
     height: '100%',
     flex: 1,
     alignContent: 'space-between',
-    paddingVertical: ms(30),
+    paddingVertical: 30,
   },
   centeredContent: {
     flex: 1,
@@ -81,6 +68,17 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
   },
-});
+};
 
-export default SplashScreen;
+const ErrorScreenWithBoundary = ({error, resetErrorBoundary}) => (
+  <View>
+    <Text>Something went wrong.</Text>
+    <Text onPress={resetErrorBoundary}>Try again</Text>
+  </View>
+);
+
+export default ({...props}) => (
+  <ErrorBoundary FallbackComponent={ErrorScreenWithBoundary}>
+    <SplashScreen {...props} />
+  </ErrorBoundary>
+);

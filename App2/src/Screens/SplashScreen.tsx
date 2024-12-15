@@ -1,31 +1,21 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, Text, StatusBar, Platform } from 'react-native';
-import { ms } from 'react-native-size-matters';
-import { apiStorage } from '../Utils/AsyncStorageManager';
-import { light } from '../styles/colors';
+import React, {useEffect} from 'react';
+import {View, Text, StatusBar, Platform} from 'react-native';
+import {ms} from 'react-native-size-matters';
+import {apiStorage} from '../Utils/AsyncStorageManager';
+import {light} from '../styles/colors';
+import {StyleSheet} from 'react-native';
 
 interface SplashScreenProps {
   navigation: any;
 }
 
-const SplashScreen: React.FC<SplashScreenProps> = (props) => {
+const SplashScreen: React.FC<SplashScreenProps> = props => {
   useEffect(() => {
     const show = async () => {
       try {
-        const [
-          first,
-          isAppUpdateNeeded,
-          appData,
-          isLoggedIn,
-          testEnvironment,
-          FaceIDPermission,
-        ] = await Promise.all([
-          apiStorage.getItem('firstLaunch'),
+        const [isAppUpdateNeeded, isLoggedIn] = await Promise.all([
           apiStorage.getItem('appNeedUpdate'),
-          apiStorage.getItem('appLaunched'),
           apiStorage.getItem('auth'),
-          apiStorage.getItem('testEnvironment'),
-          apiStorage.getItem('biometricStatus'),
         ]);
 
         const timer = setTimeout(() => {
@@ -47,15 +37,15 @@ const SplashScreen: React.FC<SplashScreenProps> = (props) => {
 
   useEffect(() => {
     StatusBar.setBackgroundColor(light.primary);
-    StatusBar.setBarStyle(Platform.OS === 'android' ? 'light-content' : 'dark-content');
+    StatusBar.setBarStyle(
+      Platform.OS === 'android' ? 'light-content' : 'dark-content',
+    );
   }, []);
 
   return (
     <View style={styles.root}>
-      <View style={styles.background}>
-        <View style={styles.centeredContent}>
-          <Text style={styles.title}>Chat - App 2</Text>
-        </View>
+      <View style={styles.centeredContent}>
+        <Text style={styles.title}>Chat - App 2</Text>
       </View>
     </View>
   );
@@ -66,13 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  background: {
-    width: '100%',
-    height: '100%',
-    flex: 1,
-    alignContent: 'space-between',
-    paddingVertical: ms(30),
   },
   centeredContent: {
     flex: 1,
@@ -85,4 +68,37 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SplashScreen;
+class ErrorBoundary extends React.Component {
+  state = {hasError: false, errorMessage: ''};
+
+  static getDerivedStateFromError(error: any) {
+    return {hasError: true};
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('Error caught in boundary:', error, errorInfo);
+    this.setState({errorMessage: error.message});
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <View style={styles.root}>
+          <Text style={{color: 'red'}}>
+            Something went wrong: {this.state.errorMessage}
+          </Text>
+        </View>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default function (props: any) {
+  return (
+    <ErrorBoundary>
+      <SplashScreen {...props} />
+    </ErrorBoundary>
+  );
+}

@@ -1,13 +1,13 @@
 import React, {createContext, useContext, useState, ReactNode} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {ms} from 'react-native-size-matters';
-import HomeIcone from '../SVGs/HomeIcone';
-import {StyleSheet, Text, View, GestureResponderEvent} from 'react-native';
-import ErrorScreen from '../Screens/ErrorScreen';
+import {GestureResponderEvent, Text, View} from 'react-native';
+import ErrorBoundary from 'react-native-error-boundary';
+import HomeIcon from '../SVGs/HomeIcone';
 import Zoomable from '../Utils/Views/Zoomable';
 import RoomListScreen from '../Screens/RoomListScreen';
 import MessagesListScreen from '../Screens/MessagesListScreen';
+import ErrorScreen from '../Screens/ErrorScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -74,7 +74,6 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
             const tabState = navigation.getState();
             const tabStackRoutes =
               tabState?.routes?.[index]?.state?.routes || [];
-
             if (tabStackRoutes.length > 1) {
               navigation.popToTop();
             }
@@ -84,9 +83,9 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
           }
         };
 
-        const IconComponent = () =>
+        const IconComponent =
           route.name === 'الرئيسية' ? (
-            <HomeIcone width={22} height={22} />
+            <HomeIcon width={22} height={22} />
           ) : null;
 
         return (
@@ -96,9 +95,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
             accessibilityState={isFocused ? {selected: true} : {}}
             onPress={onPress}
             style={[styles.tabButton, isFocused && styles.tabButtonFocused]}>
-            <View style={styles.iconContainer}>
-              <IconComponent />
-            </View>
+            <View style={styles.iconContainer}>{IconComponent}</View>
             <Text style={styles.tabLabel}>{label}</Text>
           </Zoomable>
         );
@@ -126,7 +123,7 @@ const TabNavigator: React.FC = () => {
       <Tab.Screen
         name="الرئيسية"
         component={HomeTab}
-        options={{tabBarIcon: () => <HomeIcone width={22} height={22} />}}
+        options={{tabBarIcon: () => <HomeIcon width={22} height={22} />}}
       />
     </Tab.Navigator>
   );
@@ -144,18 +141,13 @@ const HomeTab: React.FC = () => (
       component={MessagesListScreen}
       options={{headerShown: false}}
     />
-    <Stack.Screen
-      name="ErrorScreen"
-      component={ErrorScreen}
-      options={{headerShown: false}}
-    />
   </Stack.Navigator>
 );
 
-const styles = StyleSheet.create({
+const styles = {
   tabBarContainer: {
     flexDirection: 'row',
-    height: ms(100),
+    height: 100,
     backgroundColor: '#ffffff',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -163,35 +155,39 @@ const styles = StyleSheet.create({
   tabButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: ms(10),
+    marginBottom: 10,
   },
   tabButtonFocused: {
     backgroundColor: '#F1F1FD',
-    borderRadius: ms(6),
-    padding: ms(8),
+    borderRadius: 6,
+    padding: 8,
   },
   tabLabel: {
-    fontSize: ms(12),
+    fontSize: 12,
     fontFamily: 'IBM Plex Sans Arabic',
     fontWeight: '500',
     color: '#4C3D8F',
-    marginTop: ms(10),
+    marginTop: 10,
   },
   tabBarStyle: {
-    height: ms(90),
-    paddingBottom: ms(10),
+    height: 90,
+    paddingBottom: 10,
   },
   tabBarItemStyle: {
-    margin: ms(8),
-    padding: ms(8),
-    borderRadius: ms(6),
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
   },
   iconContainer: {
-    marginTop: ms(10),
+    marginTop: 10,
   },
-});
+};
 
-export default TabNavigator;
+export default () => (
+  <ErrorBoundary FallbackComponent={ErrorScreen}>
+    <TabNavigator />
+  </ErrorBoundary>
+);
 
 export const useTabVisibility = () => {
   const {setIsVisible} = useTabContext();

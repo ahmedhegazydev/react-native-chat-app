@@ -96,6 +96,10 @@ const MessagesListScreen: React.FC<MessagesListScreenProps> = props => {
     </View>
   );
 
+  if (error) {
+    return <Text>Error: {error}</Text>;
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -109,7 +113,6 @@ const MessagesListScreen: React.FC<MessagesListScreenProps> = props => {
         />
         <View style={styles.content}>
           {loading && page === 1 && <Text>Loading messages...</Text>}
-          {error && <Text>Error: {error}</Text>}
           <FlashList
             ref={flatListRef}
             data={messages}
@@ -209,7 +212,38 @@ const styles = {
   },
 };
 
+class ErrorBoundary extends React.Component {
+  state = {hasError: false, errorMessage: ''};
+
+  static getDerivedStateFromError(error: any) {
+    return {hasError: true};
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('Error caught in boundary:', error, errorInfo);
+    this.setState({errorMessage: error.message});
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <View style={styles.container}>
+          <Text style={{color: 'red'}}>
+            Something went wrong: {this.state.errorMessage}
+          </Text>
+        </View>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 export default function (props: any) {
   const theme = useTheme();
-  return <MessagesListScreen {...props} theme={theme.colors} />;
+  return (
+    <ErrorBoundary>
+      <MessagesListScreen {...props} theme={theme.colors} />
+    </ErrorBoundary>
+  );
 }

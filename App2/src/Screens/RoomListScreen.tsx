@@ -6,11 +6,11 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
 import {useTheme} from '@react-navigation/native';
 import Header from '../Utils/Views/Header';
 import useRoomsStore from '../store/fetchRoomsSlice';
 import {FlashList} from '@shopify/flash-list';
+import {ScaledSheet} from 'react-native-size-matters';
 
 interface Room {
   id: string;
@@ -57,6 +57,10 @@ const RoomListScreen: React.FC<RoomListScreenProps> = props => {
     );
   };
 
+  if (error) {
+    return <Text style={styles.errorText}>{error}</Text>;
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -66,7 +70,6 @@ const RoomListScreen: React.FC<RoomListScreenProps> = props => {
         <Header navigation={props.navigation} colors={color} />
         <View style={styles.content}>
           {loading && <ActivityIndicator size="large" />}
-          {error && <Text style={styles.errorText}>{error}</Text>}
           {!loading && rooms?.length === 0 && (
             <Text style={styles.noRoomsText}>No rooms available.</Text>
           )}
@@ -141,7 +144,38 @@ const styles = ScaledSheet.create({
   },
 });
 
+class ErrorBoundary extends React.Component {
+  state = {hasError: false, errorMessage: ''};
+
+  static getDerivedStateFromError(error: any) {
+    return {hasError: true};
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('Error caught in boundary:', error, errorInfo);
+    this.setState({errorMessage: error.message});
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <View style={styles.container}>
+          <Text style={{color: 'red'}}>
+            Something went wrong: {this.state.errorMessage}
+          </Text>
+        </View>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 export default function (props: any) {
   const theme = useTheme();
-  return <RoomListScreen {...props} theme={theme.colors} />;
+  return (
+    <ErrorBoundary>
+      <RoomListScreen {...props} theme={theme.colors} />
+    </ErrorBoundary>
+  );
 }

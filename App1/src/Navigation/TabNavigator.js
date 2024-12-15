@@ -2,12 +2,13 @@ import React, {createContext, useContext, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {ms} from 'react-native-size-matters';
-import HomeIcone from '../SVGs/HomeIcone';
 import {StyleSheet, Text, View} from 'react-native';
-import ErrorScreen from '../Screens/ErrorScreen';
+import HomeIcone from '../SVGs/HomeIcone';
+import ErrorScreenWithBoundary from '../Screens/ErrorScreen';
 import Zoomable from '../Utils/Views/Zoomable';
 import RoomListScreen from '../Screens/RoomListScreen';
 import MessagesListScreen from '../Screens/MessagesListScreen';
+import ErrorBoundary from 'react-native-error-boundary';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -118,7 +119,7 @@ const HomeTab = () => (
     />
     <Stack.Screen
       name="ErrorScreen"
-      component={ErrorScreen}
+      component={ErrorScreenWithBoundary}
       options={{headerShown: false}}
     />
   </Stack.Navigator>
@@ -163,7 +164,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabNavigator;
+export default function TabNavigatorWithErrorBoundary(props) {
+  return (
+    <ErrorBoundary
+      FallbackComponent={ErrorScreenWithBoundary}
+      onError={(error, info) => {
+        console.error('Error boundary caught an error:', error);
+        console.log(info);
+      }}>
+      <TabNavigator {...props} />
+    </ErrorBoundary>
+  );
+}
 
 export const useTabVisibility = () => {
   const {setIsVisible} = useTabContext();

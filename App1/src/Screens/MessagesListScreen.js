@@ -14,6 +14,8 @@ import chatStore from '../store/chatSlice';
 import roomMessagesStore from '../store/fetchRoomMessagesSlice';
 import {FlashList} from '@shopify/flash-list';
 import {light} from '../styles/colors';
+import ErrorBoundary from 'react-native-error-boundary';
+import ErrorScreenWithBoundary from './ErrorScreen';
 
 const withTheme = WrappedComponent => props => {
   const theme = useTheme();
@@ -124,63 +126,64 @@ class MessagesListScreen extends Component {
   render() {
     const {room} = this.props.route.params;
     const {newMessage, loadingMore} = this.state;
-
     const {messages, loading, error} = this.roomMessagesStore.getState();
 
     return (
-      <View style={styles.container}>
-        <ImageBackground
-          source={require('../assets/background_images/ig_background.png')}
-          resizeMode="cover"
-          style={styles.background}>
-          <Header
-            navigation={this.props.navigation}
-            headerName={room?.name || 'Messages'}
-            colors={this.props.theme}
-          />
-          <View style={styles.content}>
-            {loading && this.state.page === 1 && (
-              <Text>Loading messages...</Text>
-            )}
-            {error && <Text>Error: {error}</Text>}
-
-            <FlashList
-              data={messages}
-              keyExtractor={item => item?.id?.toString()}
-              renderItem={this.renderMessage}
-              inverted={true}
-              onEndReached={this.loadMoreMessages}
-              onEndReachedThreshold={0.1}
-              ListFooterComponent={
-                loadingMore ? (
-                  <View style={styles.footer}>
-                    <ActivityIndicator size="small" color="#666" />
-                    <Text style={styles.footerText}>
-                      Loading more messages...
-                    </Text>
-                  </View>
-                ) : null
-              }
+      <ErrorBoundary FallbackComponent={ErrorScreenWithBoundary}>
+        <View style={styles.container}>
+          <ImageBackground
+            source={require('../assets/background_images/ig_background.png')}
+            resizeMode="cover"
+            style={styles.background}>
+            <Header
+              navigation={this.props.navigation}
+              headerName={room?.name || 'Messages'}
+              colors={this.props.theme}
             />
+            <View style={styles.content}>
+              {loading && this.state.page === 1 && (
+                <Text>Loading messages...</Text>
+              )}
+              {error && <Text>Error: {error}</Text>}
 
-            <View style={styles.inputContainer}>
-              <LabeledTextInput
-                containerStyle={styles.inputField}
-                value={newMessage}
-                onChangeText={text => this.setState({newMessage: text})}
-                placeholder="Type a message"
-                borderColor="#303056"
-                inputStyle={styles.inputStyle}
+              <FlashList
+                data={messages}
+                keyExtractor={item => item?.id?.toString()}
+                renderItem={this.renderMessage}
+                inverted
+                onEndReached={this.loadMoreMessages}
+                onEndReachedThreshold={0.1}
+                ListFooterComponent={
+                  loadingMore && (
+                    <View style={styles.footer}>
+                      <ActivityIndicator size="small" color="#666" />
+                      <Text style={styles.footerText}>
+                        Loading more messages...
+                      </Text>
+                    </View>
+                  )
+                }
               />
-              <CustomButton
-                style={{backgroundColor: light.primary}}
-                title="Send"
-                onPress={this.handleSendMessage}
-              />
+
+              <View style={styles.inputContainer}>
+                <LabeledTextInput
+                  containerStyle={styles.inputField}
+                  value={newMessage}
+                  onChangeText={text => this.setState({newMessage: text})}
+                  placeholder="Type a message"
+                  borderColor="#303056"
+                  inputStyle={styles.inputStyle}
+                />
+                <CustomButton
+                  style={{backgroundColor: light.primary}}
+                  title="Send"
+                  onPress={this.handleSendMessage}
+                />
+              </View>
             </View>
-          </View>
-        </ImageBackground>
-      </View>
+          </ImageBackground>
+        </View>
+      </ErrorBoundary>
     );
   }
 }
