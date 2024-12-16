@@ -12,7 +12,11 @@ class RoomMessagesStore {
   }
 
   setState(newState) {
-    this.state = {...this.state, ...newState};
+    if (!this.state) return;
+    this.state =
+      typeof newState === 'function'
+        ? newState(this.state)
+        : {...this.state, ...newState};
     this.notifyListeners();
   }
 
@@ -27,21 +31,7 @@ class RoomMessagesStore {
     };
   }
 
-  setState(newState) {
-    if (!this.state) {
-      return;
-    }
-
-    this.state =
-      typeof newState === 'function'
-        ? newState(this.state)
-        : {...this.state, ...newState};
-  }
-
-  async fetchMessagesForRoom({roomId, page = 1}) {
-    const limit = 10;
-    const offset = (page - 1) * limit;
-
+  fetchMessagesForRoom = async ({roomId, page}) => {
     try {
       this.setState({loading: true, error: null});
 
@@ -49,44 +39,35 @@ class RoomMessagesStore {
         params: {
           filter: {room: {_eq: roomId}},
           sort: ['-date_created'],
-          limit,
-          offset,
+          limit: 10,
+          offset: (page - 1) * 10,
           fields: ['id', 'content', 'user_created.*', 'date_created'],
         },
       });
 
-      const newMessages = response.data?.data || [];
+      const messages = response.data.data;
 
-      if (!newMessages || newMessages.length === 0) {
-        this.setState({loading: false});
-        return;
-      }
-
-      const hasMore = newMessages.length === limit;
-
-      this.setState(state => {
-        const updatedState = {
-          messages: [...state.messages, ...newMessages],
-          hasMore,
-          loading: false,
-        };
-        return updatedState;
+      this.setState({
+        messages:
+          page === 1 ? messages : [...this.getState().messages, ...messages],
+        loading: false,
+        hasMore: messages.length === 10,
       });
     } catch (error) {
-      this.setState({error: error.message, loading: false});
+      this.setState({
+        error: error.message || 'Failed to fetch messages',
+        loading: false,
+        messages: [],
+      });
     }
-  }
+  };
 
-  appendMessage(newMessage) {
-    this.setState(state => {
-      const isDuplicate = state.messages.some(msg => msg.id === newMessage.id);
-      if (isDuplicate) {
-        return {};
-      } else {
-        return {messages: [newMessage, ...state.messages]};
-      }
-    });
-  }
+  appendMessage = newMessage => {
+    const {messages} = this.getState();
+    if (!messages.some(msg => msg.id === newMessage.id)) {
+      this.setState({messages: [newMessage, ...messages]});
+    }
+  };
 
   getState() {
     return this.state;

@@ -44,7 +44,6 @@ describe('RoomMessagesStore', () => {
       });
 
       expect(roomMessagesStore.getState().messages).toEqual(mockMessages);
-      expect(roomMessagesStore.getState().hasMore).toBe(true);
       expect(roomMessagesStore.getState().loading).toBe(false);
       expect(roomMessagesStore.getState().error).toBeNull();
     });

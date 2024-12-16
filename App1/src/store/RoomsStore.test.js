@@ -17,6 +17,7 @@ jest.mock('../Utils/AsyncStorageManager', () => ({
 describe('RoomsStore', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    roomsStore.setState({rooms: [], isLoading: false, error: null});
   });
 
   describe('fetchRooms', () => {
@@ -26,8 +27,8 @@ describe('RoomsStore', () => {
         {id: '2', name: 'Room 2'},
       ];
 
-      apiStorage.getItem.mockResolvedValue('123'); // Simulate userId in storage
-      networkManager.fetchRooms.mockResolvedValue({data: mockRooms}); // Mock API response
+      apiStorage.getItem.mockResolvedValue('123');
+      networkManager.fetchRooms.mockResolvedValue({data: mockRooms});
 
       await roomsStore.fetchRooms();
 
@@ -39,7 +40,7 @@ describe('RoomsStore', () => {
     });
 
     it('should handle missing userId and set error state', async () => {
-      apiStorage.getItem.mockResolvedValue(null); // Simulate missing userId
+      apiStorage.getItem.mockResolvedValue(null);
 
       await roomsStore.fetchRooms();
 
@@ -51,8 +52,8 @@ describe('RoomsStore', () => {
     it('should handle API errors and update state', async () => {
       const mockError = {response: {data: 'API Error'}};
 
-      apiStorage.getItem.mockResolvedValue('123'); // Simulate userId in storage
-      networkManager.fetchRooms.mockRejectedValue(mockError); // Simulate API error
+      apiStorage.getItem.mockResolvedValue('123');
+      networkManager.fetchRooms.mockRejectedValue(mockError);
 
       await roomsStore.fetchRooms();
 
@@ -65,8 +66,8 @@ describe('RoomsStore', () => {
     it('should handle general errors and update state', async () => {
       const mockError = new Error('Network error');
 
-      apiStorage.getItem.mockResolvedValue('123'); // Simulate userId in storage
-      networkManager.fetchRooms.mockRejectedValue(mockError); // Simulate general error
+      apiStorage.getItem.mockResolvedValue('123');
+      networkManager.fetchRooms.mockRejectedValue(mockError);
 
       await roomsStore.fetchRooms();
 
@@ -80,12 +81,7 @@ describe('RoomsStore', () => {
   describe('getState', () => {
     it('should return the current state', () => {
       const state = roomsStore.getState();
-
-      expect(state).toEqual({
-        rooms: [],
-        isLoading: false,
-        error: null,
-      });
+      expect(state).toEqual({rooms: [], isLoading: false, error: null});
     });
   });
 });

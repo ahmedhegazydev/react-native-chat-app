@@ -19,9 +19,7 @@ class RoomsStore {
       const currentUserId = await apiStorage.getItem('userId');
       if (!currentUserId) throw new Error('No user ID found in storage.');
 
-      const params = {
-        fields: ['*'],
-      };
+      const params = {fields: ['*']};
 
       this.setState({isLoading: true, error: null});
 
@@ -29,10 +27,12 @@ class RoomsStore {
 
       this.setState({rooms: response.data || [], isLoading: false});
     } catch (error) {
-      this.setState({
-        error: error.response?.data || 'Failed to fetch rooms.',
-        isLoading: false,
-      });
+      const errorMessage =
+        error.message === 'No user ID found in storage.'
+          ? error.message
+          : error.response?.data || 'Failed to fetch rooms.';
+
+      this.setState({error: errorMessage, isLoading: false});
     }
   }
 
